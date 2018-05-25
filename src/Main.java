@@ -22,6 +22,7 @@ public class Main {
 		    //Data計算用
 		    String dataChangeDblquo;
 		    String dataChange;
+		    String dataString;
 		    long dataSum =0;
 		    long dataLong=0;
 		    boolean isDiff = true;
@@ -38,26 +39,33 @@ public class Main {
 		    }
 		    //2次元配列の準備
 		    //fileString[][1] 時間, fileString[][3] 通信先, fileString[][5] データ量
+		    //ダブルコーテーションが入っている
 		    String[][] fileString = new String[filelist.size()][]; //csvファイル読み込み用配列
+		    String[][] fileDbleQuo = new String[filelist.size()][]; //csvファイル読み込み用配列
+		    String dbleQuo;
 		    for(int i=0;i<filelist.size();i++){
+		    	fileDbleQuo[i] = filelist.get(i);
 		    	fileString[i]=filelist.get(i); //ArrayListから二次元配列
+		    	for(int k=0;k<5;k++){
+		    		dbleQuo = fileDbleQuo[i][k];
+		    		fileString[i][k]=dbleQuo.replace("\"","");
+		    	}
 		    	//dataをlong型にかえるための下準備
 		    	dataChangeDblquo=fileString[i][5];
 		    	dataChange = dataChangeDblquo.replace("\"","");
-		    	
-		    	//--------------------TODO-------------------------------------
+		    	dataString = fileString[i][5];
+		    	//--------------------TODO--------------------------
 		    	//Calculationクラスでやる
 		    	if(i>1){
-		    		dataLong = Long.parseLong(dataChange);//data型をlong型に変える
+		    		dataLong = Long.parseLong(dataChange);//string型をlong型に変える
 		    		dif = Calculation.difference(fileString[i][1], fileString[i-1][1]);//difにCalculationのdifferenceを入れる
 		    		timeDiffList.add(dif);
-		    		
+//		    		System.out.println(dif);
 		    		//1秒の差がない時はfalse 1秒の差がある時にtrue
 		    		if(dif<1){
 		    			isDiff=false;
 		    		}else{
 		    			s_count += 1;
-		    			System.out.println(fileString[i][1]);
 		    			isDiff=true;
 		    		}
 		    		//1秒の差がない時にデータ量を足す
@@ -77,7 +85,6 @@ public class Main {
 		     System.out.println("データ量 (B/s)"+bps);
 		     kbps = (bps/100)*8;
 		     System.out.println("Kbps " + kbps);
-		     System.out.println("リストサイズ" + dataSumList.size());
 		     System.out.println("秒数" + s_count);
 		     System.out.println("ファイルサイズ" + filelist.size());
 		    br.close();

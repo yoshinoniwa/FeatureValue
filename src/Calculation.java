@@ -10,18 +10,18 @@ public class Calculation {
 		Date timeToDate,timeFromDate; //時間をdate型に変更
 		long timeToLong,timeFromLong; //long型に変更
 		long diff=0; //差
-		String timeToChange = timeTo;
-		String timeFromchange = timeFrom;
-		
+	
 		try{
 			//Date型に時間を入れている
-			timeToDate = sdf.parse(timeToChange.replace("\"",""));
-			timeFromDate = sdf.parse(timeFromchange.replace("\"",""));
+			timeToDate = sdf.parse(timeTo);
+			timeFromDate = sdf.parse(timeFrom);
 			//Date型からlong型へ変更
 			timeToLong = timeToDate.getTime();
 			timeFromLong = timeFromDate.getTime();
 			//秒数の差
 			diff = (timeToLong - timeFromLong)/1000;
+			System.out.println(timeToDate);
+			System.out.println(diff);
 		}catch (ParseException e){
 			System.out.println(e);
 		}
