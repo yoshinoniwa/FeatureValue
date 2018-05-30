@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
-			File file = new File("musicstreaming-0518");
+			File file = new File("spotcam_0525");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
 		      
