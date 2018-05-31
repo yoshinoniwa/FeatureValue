@@ -87,6 +87,9 @@ public class Main {
 		     System.out.println("Kbps " + kbps);
 		     System.out.println("秒数" + s_count);
 		     System.out.println("ファイルサイズ" + filelist.size());
+		     System.out.println(fileString[2][3]);
+		     SystemCall.communicationDestination(fileString[2][3]);
+		     
 		    br.close();
 		    } catch (IOException e) {
 		    	System.out.println(e);

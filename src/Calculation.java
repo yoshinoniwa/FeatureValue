@@ -20,8 +20,8 @@ public class Calculation {
 			timeFromLong = timeFromDate.getTime();
 			//秒数の差
 			diff = (timeToLong - timeFromLong)/1000;
-			System.out.println(timeToDate);
-			System.out.println(diff);
+//			System.out.println(timeToDate);
+//			System.out.println(diff);
 		}catch (ParseException e){
 			System.out.println(e);
 		}
