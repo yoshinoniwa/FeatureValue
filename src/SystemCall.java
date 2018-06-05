@@ -1,9 +1,9 @@
 import java.io.BufferedReader;
-import java.io.File;
+//import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.omg.CORBA.portable.InputStream;
+//import org.omg.CORBA.portable.InputStream;
 
 public class SystemCall {
 	 public static String communicationDestination(String ipAdrress) throws IOException {

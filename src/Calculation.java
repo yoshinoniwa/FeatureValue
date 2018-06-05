@@ -27,7 +27,7 @@ public class Calculation {
 		}
 		return diff;
 	}
-	//和を求める
+	//和
 	public static long addition(ArrayList<Long> list){
 		long sum=0;
 		for(int i=0;i<list.size();i++){
@@ -35,13 +35,15 @@ public class Calculation {
 		}
 		return sum;
 	}
-	//平均を求める
+	//平均
 	public static long average(ArrayList<Long> list){
 		long ave=0;
 		long sum = addition(list);
 		ave = sum/list.size();
 		return ave;
 	}
+	
+	//標準偏差
 	
 	public static void result(){
 		
