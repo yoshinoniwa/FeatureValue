@@ -10,7 +10,7 @@ public class SystemCall {
 //	        String ipAddress = "google.co.jp"; // mecabで形態素解析したいtxtファイルを指定
 
 	        String[] Command = { "traceroute" , ipAdrress }; // cmd.exeでmecab.exeを起動し指定したファイル(filePath)を形態素解析する
-
+	        String[] tracerouteLine; 
 	        Process process = null;
 	        int count = 0; 
 	        
@@ -35,8 +35,12 @@ public class SystemCall {
 	                break; // 全ての行を読み切ったら抜ける
 	            } else {
 	                System.out.println("line : " + tracerouteResult); // 実行結果を表示
-	                Traceroute.tracerouteresult(tracerouteResult);
-	                TracerouteInfo.trancerouteofClassfication(count);
+	                tracerouteLine = Traceroute.tracerouteresult(tracerouteResult);
+//	                System.out.println("配列");
+//	                for(int i=0;i<tracerouteLine.length;i++){
+//	                	System.out.println(tracerouteLine[i]);
+//	                }
+	                TracerouteInfo.trancerouteofClassfication(tracerouteLine,count);
 	                count++;
 	            }
 	        }
