@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import Traceroute.TracerouteExec;
+
 
 public class Main {
 	public static void main(String args[]) throws ParseException {
@@ -29,6 +31,10 @@ public class Main {
 		    ArrayList<Long> dataSumList = new ArrayList<Long>();
 		    long bps=0;
 		    long kbps =0;
+		    
+		   TracerouteExec tracerouteexec = new TracerouteExec();
+		   tracerouteexec.systemCall();
+//		   tracerouteexec.splitLine();
 		    
 		    //秒数確認
 		    int s_count=0;
@@ -85,10 +91,9 @@ public class Main {
 		     System.out.println("データ量 (B/s)"+bps);
 		     kbps = (bps/100)*8;
 		     System.out.println("Kbps " + kbps);
-		     System.out.println("秒数" + s_count);
-		     System.out.println("ファイルサイズ" + filelist.size());
-		     System.out.println(fileString[2][3]);
-		     SystemCall.communicationDestination(fileString[2][3]);
+//		     System.out.println("秒数" + s_count);
+//		     System.out.println("ファイルサイズ" + filelist.size());
+//		     System.out.println(fileString[2][3]);
 		     
 		    br.close();
 		    } catch (IOException e) {

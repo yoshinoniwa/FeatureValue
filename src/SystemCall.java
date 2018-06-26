@@ -34,13 +34,13 @@ public class SystemCall {
 	            if (tracerouteResult == null) {
 	                break; // 全ての行を読み切ったら抜ける
 	            } else {
-	                System.out.println("line : " + tracerouteResult); // 実行結果を表示
+//	                System.out.println("line : " + tracerouteResult); // 実行結果を表示
 	                tracerouteLine = Traceroute.tracerouteresult(tracerouteResult);
 //	                System.out.println("配列");
 //	                for(int i=0;i<tracerouteLine.length;i++){
 //	                	System.out.println(tracerouteLine[i]);
 //	                }
-	                TracerouteInfo.trancerouteofClassfication(tracerouteLine,count);
+//	                TracerouteInfo.trancerouteofClassfication(tracerouteLine,count);
 	                count++;
 	            }
 	        }
