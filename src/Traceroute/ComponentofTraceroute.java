@@ -14,6 +14,7 @@ class ComponentofTraceroute {
 	}
 	public void setHopnum(double hop_num){
 		this.hop_num = hop_num;
+
 	}
 	
 	//IPアドレスの取得
@@ -45,7 +46,7 @@ class ComponentofTraceroute {
 	//レスポンス値(2回目)の取得
 	//レスポンス値(2回目)のセット
 	public double getResponseTime2(){
-		return responsetime3;
+		return responsetime2;
 	}
 	public void setResponseTime2(double responsetime2){
 		this.responsetime2 = responsetime2;
