@@ -164,7 +164,6 @@ public class TracerouteExec {
 		//TracerouteCalculationクラスに値を渡す
 		TracerouteCalculation tracal = new TracerouteCalculation();
 		tracal.setValue(tre.setTracerouteMap(),cot.getHopnum());
-		
 	}
 		
 }

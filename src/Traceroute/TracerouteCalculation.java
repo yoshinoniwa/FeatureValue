@@ -6,10 +6,12 @@ import java.util.TreeMap;
 public class TracerouteCalculation {
 	Traceroute tre = new Traceroute();
 	ComponentofTraceroute com = new ComponentofTraceroute();
-	private double responsetime1,responsetime2,responsetime3;
-	private double sum=0;
-	private double ave=0;
-	
+	TracerouteFutureValue tfv = new TracerouteFutureValue();
+	double responsetime1,responsetime2,responsetime3;
+	double sum=0;
+	double ave=0;
+		
+	//Responsetimeへ値をセットする
 	public void setValue(TreeMap map,double hop){
 		responsetime1 = (double) ((ArrayList) map.get(hop)).get(2);
 		responsetime2 = (double) ((ArrayList) map.get(hop)).get(3);
@@ -28,6 +30,13 @@ public class TracerouteCalculation {
 			ave = sum/3;
 		}
 		System.out.println("平均" + ave);
+		tfv.setFutureValue(ave);
 	}
 	
+	//１つずつの平均値
+	public double getAverageResponsetime(){
+		
+		
+		return ave;
+	}
 }

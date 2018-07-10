@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import Traceroute.Traceroute;
+//import Traceroute.Traceroute;
 import Traceroute.TracerouteExec;
-
+//import Traceroute.TracerouteCalculation;
+import Traceroute.TracerouteFutureValue;
+import Ping.PingExec;
 
 public class Main {
 	public static void main(String args[]) throws ParseException {
@@ -32,9 +34,15 @@ public class Main {
 		    ArrayList<Long> dataSumList = new ArrayList<Long>();
 		    long bps=0;
 		    long kbps =0;
-		    
-		   TracerouteExec tracerouteexec = new TracerouteExec();
-		   tracerouteexec.systemCall();
+//		    
+//		   TracerouteExec tracerouteexec = new TracerouteExec();
+//		   tracerouteexec.systemCall();
+//		   TracerouteFutureValue tfv = new TracerouteFutureValue();
+//		   tfv.show();
+		   
+		   PingExec pingexec = new PingExec();
+		   pingexec.SystemCall();
+		   
 //		   tracerouteexec.splitLine();
 		    
 		    //秒数確認
