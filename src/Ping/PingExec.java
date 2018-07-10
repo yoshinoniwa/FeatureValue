@@ -44,7 +44,7 @@ public class PingExec {
             	show();
                 break; // 全ての行を読み切ったら抜ける
             } else {
-                System.out.println("line : " + pingResult); // 実行結果を表示
+//                System.out.println("line : " + pingResult); // 実行結果を表示
                 splitPing = splitLine(pingResult);
 
                 pingList.add(splitPing.clone());//tracerouteの実行結果の1行を要素ごとに分割
@@ -69,7 +69,7 @@ public class PingExec {
 		
 	}
 	public void show(){
-		System.out.println("最小/平均/最大/標準偏差　" + minTime+"/" +aveTime+"/" + maxTime+"/" + devTime);
+//		System.out.println("最小/平均/最大/標準偏差　" + minTime+"/" +aveTime+"/" + maxTime+"/" + devTime);
 	}
 		
 }

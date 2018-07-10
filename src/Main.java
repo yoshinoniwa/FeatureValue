@@ -10,6 +10,7 @@ import Traceroute.TracerouteExec;
 //import Traceroute.TracerouteCalculation;
 import Traceroute.TracerouteFutureValue;
 import Ping.PingExec;
+import Ipgelocation.IpstackApi;
 
 public class Main {
 	public static void main(String args[]) throws ParseException {
@@ -39,10 +40,11 @@ public class Main {
 //		   tracerouteexec.systemCall();
 //		   TracerouteFutureValue tfv = new TracerouteFutureValue();
 //		   tfv.show();
-		   
-		   PingExec pingexec = new PingExec();
-		   pingexec.SystemCall();
-		   
+//		   
+//		   PingExec pingexec = new PingExec();
+//		   pingexec.SystemCall();
+		   IpstackApi isa = new IpstackApi();
+		   isa.getApi();
 //		   tracerouteexec.splitLine();
 		    
 		    //秒数確認
