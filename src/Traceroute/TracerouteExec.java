@@ -49,27 +49,22 @@ public class TracerouteExec {
             if (tracerouteResult == null) {
                 break; // 全ての行を読み切ったら抜ける
             } else {
-//                System.out.println("line : " + tracerouteResult); // 実行結果を表示
+                System.out.println("line : " + tracerouteResult); // 実行結果を表示
                 splitLine(tracerouteResult);//tracerouteの実行結果の1行を要素ごとに分割
                 setTracerouteValue();
-            }
-            
+            }            
         	}
+        IpaddressLocalJudge ilj = new IpaddressLocalJudge();
+//        ilj.setPrivateIpaddress();
 	}
 	
 	//分割処理
 	//一行に出力されるtracerouteの結果をそれぞれ要素ごとに分割する
 	public void splitLine(String line){
 		String[] splitTraceroute =  line.split("  "); //空白で分割する
-//		System.out.print("出力結果 yyyyy");
-//		for(int i=0;i<splitTraceroute.length;i++){
-//			System.out.print(" "+splitTraceroute[i]+",");
-//		}
-//		System.out.println("");
-		
 		separateDomainIp(splitTraceroute[1]); //ドメインとIPアドレスを分ける
 		changeTracerouteType(splitTraceroute); //型変更変更
-		System.out.println("");	
+
 	}
 
 	//分割したデータを型変換するメソッド
@@ -87,17 +82,11 @@ public class TracerouteExec {
 			hop_num += 0.1;
 			hop=false;
 		}
-		System.out.println("ホップ数 : "+hop_num);
-		
 		//レスポンス値
-
 		responsetime3 = getResponsetime(traceroute.length,4,traceroute);
 		responsetime2 = getResponsetime(traceroute.length,3,traceroute);
 		responsetime1 = getResponsetime(traceroute.length,2,traceroute);
-
-		System.out.println("レスポンス値1:"+responsetime1+", レスポンス値2:" + responsetime2+", レスポンス値3:" + responsetime3);
 	}
-	
 	//ドメインとIPアドレスを分ける
 	public void separateDomainIp(String domainAndIp){
 		//IPアドレス抜き出し
@@ -122,7 +111,6 @@ public class TracerouteExec {
             }
             domainAndIp = domain;
         }
-		System.out.println("ドメイン:"+domain + ", Ipアドレス:"+ ipaddress);
 	}
 	
 	//レスポンス値の設定
@@ -162,8 +150,6 @@ public class TracerouteExec {
 		Traceroute tre = new Traceroute();
 		tre.setTracerouteValue(cot.getHopnum(), cot.getDomain(), cot.getIp(), cot.getResponseTime1(), cot.getResponseTime2(), cot.getResponseTime3());
 		//TracerouteCalculationクラスに値を渡す
-		TracerouteCalculation tracal = new TracerouteCalculation();
-		tracal.setValue(tre.setTracerouteMap(),cot.getHopnum());
 	}
 		
 }

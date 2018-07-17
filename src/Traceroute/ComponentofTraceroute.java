@@ -14,7 +14,6 @@ class ComponentofTraceroute {
 	}
 	public void setHopnum(double hop_num){
 		this.hop_num = hop_num;
-
 	}
 	
 	//IPアドレスの取得

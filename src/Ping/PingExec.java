@@ -46,7 +46,6 @@ public class PingExec {
             } else {
 //                System.out.println("line : " + pingResult); // 実行結果を表示
                 splitPing = splitLine(pingResult);
-
                 pingList.add(splitPing.clone());//tracerouteの実行結果の1行を要素ごとに分割
             
             }

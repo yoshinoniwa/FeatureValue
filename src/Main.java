@@ -8,8 +8,8 @@ import java.util.ArrayList;
 //import Traceroute.Traceroute;
 import Traceroute.TracerouteExec;
 //import Traceroute.TracerouteCalculation;
-import Traceroute.TracerouteFutureValue;
-import Ping.PingExec;
+//import Traceroute.TracerouteFutureValue;
+//import Ping.PingExec;
 import Ipgelocation.IpstackApi;
 
 public class Main {
@@ -28,7 +28,6 @@ public class Main {
 		    //Data計算用
 		    String dataChangeDblquo;
 		    String dataChange;
-		    String dataString;
 		    long dataSum =0;
 		    long dataLong=0;
 		    boolean isDiff = true;
@@ -36,8 +35,8 @@ public class Main {
 		    long bps=0;
 		    long kbps =0;
 //		    
-//		   TracerouteExec tracerouteexec = new TracerouteExec();
-//		   tracerouteexec.systemCall();
+		   TracerouteExec tracerouteexec = new TracerouteExec();
+		   tracerouteexec.systemCall();
 //		   TracerouteFutureValue tfv = new TracerouteFutureValue();
 //		   tfv.show();
 //		   
@@ -47,8 +46,6 @@ public class Main {
 		   isa.getApi();
 //		   tracerouteexec.splitLine();
 		    
-		    //秒数確認
-		    int s_count=0;
 		    //ArrayList:filelistにCSVファイルを格納
 		    while (br.ready()){
 		    	String line = br.readLine();
@@ -70,7 +67,6 @@ public class Main {
 		    	//dataをlong型にかえるための下準備
 		    	dataChangeDblquo=fileString[i][5];
 		    	dataChange = dataChangeDblquo.replace("\"","");
-		    	dataString = fileString[i][5];
 		    	//--------------------TODO--------------------------
 		    	//Calculationクラスでやる
 		    	if(i>1){
@@ -82,7 +78,6 @@ public class Main {
 		    		if(dif<1){
 		    			isDiff=false;
 		    		}else{
-		    			s_count += 1;
 		    			isDiff=true;
 		    		}
 		    		//1秒の差がない時にデータ量を足す
