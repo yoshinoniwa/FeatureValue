@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //import com.fasterxml.jackson.databind.JsonNode;
@@ -11,12 +12,14 @@ import java.util.Scanner;
 
 public class IpstackApi {
 	String accessKey = "be746d3505a55332ac424a03105ce3ce";
-	String ipAddress = "17.253.91.201";
-	String requestUrl = "http://api.ipstack.com/"+ipAddress+"?access_key="+accessKey;
+//	String ipAddress = "17.253.91.201";
+	String requestUrl;
 	String[] data;
 	String country_name,city;
 	static double latitude;
 	static double longitude;
+	static ArrayList<Double> latitude_list = new ArrayList<Double>();
+	static ArrayList<Double> longitude_list = new ArrayList<Double>();
 	//jsonData 配列
 	//[3] continent_name
 	//[4] contry_code
@@ -25,22 +28,38 @@ public class IpstackApi {
 	//[11] longitude　経度
 	
 	
-	public void getApi(){
+	public void getApi(String ipAddress){
+		requestUrl = "http://api.ipstack.com/"+ipAddress+"?access_key="+accessKey;
 		data = splitJsonData(jsonGetRequest(requestUrl));
 //		for(int i=0;i<data.length;i++){
 //			System.out.println(data[i]);
 //		}
-		JsonData jd = new JsonData();
-		jd.setLatitudee(latitude);
-		jd.setLongitude(longitude);
-		System.out.println("緯度" + jd.getLatitude() + ",経度"+ jd.getLongitude());
-		DistanceofIpaddress doi = new DistanceofIpaddress();
-		double distance = doi.distance(35.1862615, 137.1127393, jd.getLatitude(), jd.getLongitude());
 		
-		System.out.println("距離 : "+distance+"m");
+		JsonData jd = new JsonData();
+		jd.setLatitude(latitude);
+		jd.setLongitude(longitude);
+		latitudeList(jd.getLatitude());
+		longitudeList(jd.getLongitude());
+//		System.out.println("IPStack Ipaddress"+ ipAddress);
+//		System.out.println("緯度" + jd.getLatitude() + ",経度"+ jd.getLongitude()+"    "+latitude_list.size());
+		
 //		System.out.println(jsonGetRequest(url));
 	}
+	private static ArrayList<Double> latitudeList(double lat){
+		latitude_list.add(lat);
+		return latitude_list;
+	}
+	private static ArrayList<Double> longitudeList(double log){
+		longitude_list.add(log);
+		return longitude_list;
+	}
 	
+	public double distance(){
+		DistanceofIpaddress doi = new DistanceofIpaddress();
+		double distance = doi.distance(latitude_list.get(0), longitude_list.get(0), latitude_list.get(1), longitude_list.get(1));
+		System.out.println("距離 : "+distance+"m");
+		return distance;
+	}
 	private static String streamToString(InputStream inputStream) {
 	    String text = new Scanner(inputStream, "UTF-8").useDelimiter("\\Z").next();
 	    return text;

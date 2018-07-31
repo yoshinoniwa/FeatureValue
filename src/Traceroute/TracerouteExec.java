@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import Ipgelocation.IpstackApi;
 //tracerouteを
 public class TracerouteExec {
 	String tracerouteResult;
@@ -18,6 +20,12 @@ public class TracerouteExec {
 	public double responsetime1,responsetime2,responsetime3;
 //	private int count = 0;
 	public boolean hop;
+	IpaddressLocalJudge ilj = new IpaddressLocalJudge();
+	ArrayList<String> ipaddress_list = new ArrayList<String>();
+	ArrayList<String> list1 = new ArrayList<String>();
+	ArrayList<String> list2 = new ArrayList<String>();
+	ArrayList<String> list3 = new ArrayList<String>();
+	String global_ipaddress;
 	
 	//呼び出し処理
 	public void systemCall() throws IOException{
@@ -49,13 +57,25 @@ public class TracerouteExec {
             if (tracerouteResult == null) {
                 break; // 全ての行を読み切ったら抜ける
             } else {
-                System.out.println("line : " + tracerouteResult); // 実行結果を表示
+//                System.out.println("line : " + tracerouteResult); // 実行結果を表示
                 splitLine(tracerouteResult);//tracerouteの実行結果の1行を要素ごとに分割
                 setTracerouteValue();
             }            
         	}
-        IpaddressLocalJudge ilj = new IpaddressLocalJudge();
-//        ilj.setPrivateIpaddress();
+       
+        ilj.setPrivateIpaddressList1();
+        ilj.setPrivateIpaddressList2();
+        ilj.setPrivateIpaddressList3();
+        list1 = ilj.getPrivateIpaddressList1();
+        list2 = ilj.getPrivateIpaddressList2();
+        list3 = ilj.getPrivateIpaddressList3();
+        ilj.judeIpAddress(list1, list2, list3, ipaddress_list);
+        global_ipaddress = ilj.getGlobalIpaddress();
+        IpstackApi isa = new IpstackApi();
+        isa.getApi(global_ipaddress);
+        System.out.println(global_ipaddress);
+//        CompareIpaddress ci = new CompareIpaddress();
+//        ci.compare(ilj.getPrivateIpaddressList1(), ilj.getPrivateIpaddressList2(), ilj.getPrivateIpaddressList3(), ipAddress);
 	}
 	
 	//分割処理
@@ -149,6 +169,8 @@ public class TracerouteExec {
 		//Tracerouteクラスに値を渡す
 		Traceroute tre = new Traceroute();
 		tre.setTracerouteValue(cot.getHopnum(), cot.getDomain(), cot.getIp(), cot.getResponseTime1(), cot.getResponseTime2(), cot.getResponseTime3());
+		ipaddress_list.add(ipaddress);
+		
 		//TracerouteCalculationクラスに値を渡す
 	}
 		

@@ -10,7 +10,7 @@ public class JsonData {
 	public double getLatitude(){
 		return latitude;
 	}
-	public void setLatitudee(double latitude){
+	public void setLatitude(double latitude){
 		this.latitude = latitude;
 	}
 	//経度

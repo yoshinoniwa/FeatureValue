@@ -1,5 +1,7 @@
 package Ipgelocation;
 
+import java.util.ArrayList;
+
 public class DistanceofIpaddress {
 
 	 // 球面三角法により、大円距離(メートル)を求める

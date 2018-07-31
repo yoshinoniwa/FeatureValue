@@ -68,7 +68,7 @@ public class PingExec {
 		
 	}
 	public void show(){
-//		System.out.println("最小/平均/最大/標準偏差　" + minTime+"/" +aveTime+"/" + maxTime+"/" + devTime);
+		System.out.println("最小/平均/最大/標準偏差　" + minTime+"/" +aveTime+"/" + maxTime+"/" + devTime);
 	}
 		
 }

@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Calculation {
+public class DataCalculation {
 	//差を求める
 	public static long difference(String timeTo,String timeFrom)throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //時間のデータフォーマット　ミリ秒
@@ -21,7 +21,7 @@ public class Calculation {
 			//秒数の差
 			diff = (timeToLong - timeFromLong)/1000;
 //			System.out.println(timeToDate);
-//			System.out.println(diff);
+			System.out.println(diff);
 		}catch (ParseException e){
 			System.out.println(e);
 		}
@@ -42,9 +42,7 @@ public class Calculation {
 		ave = sum/list.size();
 		return ave;
 	}
-	
 	//標準偏差
-	
 	public static void result(){
 		
 	}

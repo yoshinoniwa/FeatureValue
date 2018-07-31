@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import Traceroute.TracerouteExec;
 //import Traceroute.TracerouteCalculation;
 //import Traceroute.TracerouteFutureValue;
-//import Ping.PingExec;
+import Ping.PingExec;
 import Ipgelocation.IpstackApi;
 
 public class Main {
@@ -20,12 +20,11 @@ public class Main {
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
 		      
-		    //Time 計算用
+		    //時間 計算用
 		    ArrayList<Long> timeDiffList = new ArrayList<Long>();
-//		    long timeDiff[] = new long[filelist.size()];
 		    long dif=0;
 		    
-		    //Data計算用
+		    //データ量計算用
 		    String dataChangeDblquo;
 		    String dataChange;
 		    long dataSum =0;
@@ -34,17 +33,19 @@ public class Main {
 		    ArrayList<Long> dataSumList = new ArrayList<Long>();
 		    long bps=0;
 		    long kbps =0;
-//		    
+		    //他クラス呼び出し用
+		   //Tracerouteの実行結果(通信先の距離)
 		   TracerouteExec tracerouteexec = new TracerouteExec();
 		   tracerouteexec.systemCall();
-//		   TracerouteFutureValue tfv = new TracerouteFutureValue();
-//		   tfv.show();
-//		   
-//		   PingExec pingexec = new PingExec();
-//		   pingexec.SystemCall();
+		   //通信先の距離IPStaticのAPI使用
 		   IpstackApi isa = new IpstackApi();
-		   isa.getApi();
-//		   tracerouteexec.splitLine();
+		   isa.getApi("17.253.91.201");
+		   isa.distance();
+		   //Pingの実行結果(通信時間)
+		   PingExec pingexec = new PingExec();
+		   pingexec.SystemCall();
+		   
+		   
 		    
 		    //ArrayList:filelistにCSVファイルを格納
 		    while (br.ready()){
@@ -67,13 +68,14 @@ public class Main {
 		    	//dataをlong型にかえるための下準備
 		    	dataChangeDblquo=fileString[i][5];
 		    	dataChange = dataChangeDblquo.replace("\"","");
-		    	//--------------------TODO--------------------------
+		    	//データ量の平均
+		    	//----------------------------------------TODO-------------------------------------------------------
 		    	//Calculationクラスでやる
 		    	if(i>1){
 		    		dataLong = Long.parseLong(dataChange);//string型をlong型に変える
-		    		dif = Calculation.difference(fileString[i][1], fileString[i-1][1]);//difにCalculationのdifferenceを入れる
+		    		dif = DataCalculation.difference(fileString[i][1], fileString[i-1][1]);//difにCalculationのdifferenceを入れる
 		    		timeDiffList.add(dif);
-//		    		System.out.println(dif);
+		    		System.out.println("差" + dif);
 		    		//1秒の差がない時はfalse 1秒の差がある時にtrue
 		    		if(dif<1){
 		    			isDiff=false;
@@ -91,9 +93,9 @@ public class Main {
 			    		dataSum =0;
 			    	}
 		    	}else{}
-		    	//---------------------------------------------------------
+		    	//-----------------------------------------------------------------------------------------------------------
 		    }
-		     bps = Calculation.average(dataSumList);
+		     bps = DataCalculation.average(dataSumList);
 		     System.out.println("データ量 (B/s)"+bps);
 		     kbps = (bps/100)*8;
 		     System.out.println("Kbps " + kbps);
