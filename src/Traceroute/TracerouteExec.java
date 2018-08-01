@@ -28,8 +28,8 @@ public class TracerouteExec {
 	String global_ipaddress;
 	
 	//呼び出し処理
-	public void systemCall() throws IOException{
-		String ipAddress="17.253.91.201";  //IPアドレスの指定
+	public void systemCall(String ipAddress) throws IOException{
+//		String ipAddress="184.51.198.59";  //IPアドレスの指定
 		Runtime runtime = Runtime.getRuntime();
 		String[] Command = { "traceroute", "-I", ipAddress }; //指定したipアドレスをtracerouteかける
         Process process = null;
@@ -73,7 +73,7 @@ public class TracerouteExec {
         global_ipaddress = ilj.getGlobalIpaddress();
         IpstackApi isa = new IpstackApi();
         isa.getApi(global_ipaddress);
-        System.out.println(global_ipaddress);
+//        System.out.println(global_ipaddress);
 //        CompareIpaddress ci = new CompareIpaddress();
 //        ci.compare(ilj.getPrivateIpaddressList1(), ilj.getPrivateIpaddressList2(), ilj.getPrivateIpaddressList3(), ipAddress);
 	}

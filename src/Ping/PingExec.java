@@ -15,8 +15,8 @@ public class PingExec {
 	double devTime;
 	
 	//Ping　実行
-	public void SystemCall() throws IOException{
-		String ipAddress = "17.253.91.201";//IPアドレス
+	public void SystemCall(String ipAddress) throws IOException{
+		ipAddress = "184.51.198.59";//IPアドレス
 		Runtime runtime = Runtime.getRuntime();
 		String[] command = { "ping","-c","10", ipAddress }; //指定したipアドレスをtracerouteかける
 		Process process = null;
@@ -41,7 +41,7 @@ public class PingExec {
             pingResult = br.readLine(); //tracerouteResultに実行結果を入れる  
             if (pingResult == null) {
             	getTime(splitPing[3]);
-            	show();
+//            	show();
                 break; // 全ての行を読み切ったら抜ける
             } else {
 //                System.out.println("line : " + pingResult); // 実行結果を表示
@@ -69,6 +69,10 @@ public class PingExec {
 	}
 	public void show(){
 		System.out.println("最小/平均/最大/標準偏差　" + minTime+"/" +aveTime+"/" + maxTime+"/" + devTime);
+	}
+	
+	public double getAveTime(){
+		return aveTime;
 	}
 		
 }

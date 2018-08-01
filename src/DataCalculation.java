@@ -9,7 +9,7 @@ public class DataCalculation {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //時間のデータフォーマット　ミリ秒
 		Date timeToDate,timeFromDate; //時間をdate型に変更
 		long timeToLong,timeFromLong; //long型に変更
-		long diff=0; //差
+		long time_diff=0; //差
 	
 		try{
 			//Date型に時間を入れている
@@ -19,13 +19,13 @@ public class DataCalculation {
 			timeToLong = timeToDate.getTime();
 			timeFromLong = timeFromDate.getTime();
 			//秒数の差
-			diff = (timeToLong - timeFromLong)/1000;
+			time_diff = (timeToLong - timeFromLong)/1000;
 //			System.out.println(timeToDate);
-			System.out.println(diff);
+//			System.out.println(diff);
 		}catch (ParseException e){
 			System.out.println(e);
 		}
-		return diff;
+		return time_diff;
 	}
 	//和
 	public static long addition(ArrayList<Long> list){
@@ -36,13 +36,22 @@ public class DataCalculation {
 		return sum;
 	}
 	//平均
-	public static long average(ArrayList<Long> list){
-		long ave=0;
-		long sum = addition(list);
+	public static double average(ArrayList<Long> list){
+		double ave=0.0;
+		double sum = (double)addition(list);
 		ave = sum/list.size();
 		return ave;
 	}
 	//標準偏差
+	public static double variance(double time_ave,long diff,int count){
+		double sum =0;
+		double var=0;
+		sum += (((double)diff-time_ave)*((double)diff-time_ave));
+		var = sum/count;
+		return var;
+		}
+	
+	
 	public static void result(){
 		
 	}

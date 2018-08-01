@@ -30,6 +30,9 @@ public class IpstackApi {
 	
 	public void getApi(String ipAddress){
 		requestUrl = "http://api.ipstack.com/"+ipAddress+"?access_key="+accessKey;
+//		String url = "http://api.ipstack.com/17.253.91.201?access_key=be746d3505a55332ac424a03105ce3ce";
+//		System.out.println(requestUrl);
+//		System.out.println(jsonGetRequest(requestUrl));
 		data = splitJsonData(jsonGetRequest(requestUrl));
 //		for(int i=0;i<data.length;i++){
 //			System.out.println(data[i]);
@@ -57,7 +60,7 @@ public class IpstackApi {
 	public double distance(){
 		DistanceofIpaddress doi = new DistanceofIpaddress();
 		double distance = doi.distance(latitude_list.get(0), longitude_list.get(0), latitude_list.get(1), longitude_list.get(1));
-		System.out.println("距離 : "+distance+"m");
+//		System.out.println("距離 : "+distance+"m");
 		return distance;
 	}
 	private static String streamToString(InputStream inputStream) {
