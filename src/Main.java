@@ -11,6 +11,7 @@ import Traceroute.TracerouteExec;
 //import Traceroute.TracerouteFutureValue;
 import Ping.PingExec;
 import Ipgelocation.IpstackApi;
+import CommunicationPattern.DistinctionIpaddress;
 
 public class Main {
 	public static void main(String args[]) throws ParseException {
@@ -64,6 +65,7 @@ public class Main {
 		    	//dataをlong型にかえるための下準備
 		    	dataChangeDblquo=fileString[i][5];
 		    	dataChange = dataChangeDblquo.replace("\"","");
+		    	
 		    	//データ量の平均
 		    	//----------------------------------------TODO-------------------------------------------------------
 		    	//Calculationクラスでやる
@@ -92,24 +94,26 @@ public class Main {
 		    	}else{}
 		    	//-----------------------------------------------------------------------------------------------------------
 		    }
-		    
+		    //DistinctionIpaddressにログを渡す
+	    	DistinctionIpaddress di = new DistinctionIpaddress();
+	    	di.setLog(fileString);
 		    //他クラス呼び出し用
-			   //Tracerouteの実行結果(通信先の距離)
-			   TracerouteExec tracerouteexec = new TracerouteExec();
-			   tracerouteexec.systemCall(fileString[1][3]);
-			   //Pingの実行結果(通信時間)
-			   PingExec pingexec = new PingExec();
-			   pingexec.SystemCall(fileString[1][3]);
-			   communication_avetime = pingexec.getAveTime();
-			 //通信先の距離IPStaticのAPI使用
-			   IpstackApi isa = new IpstackApi();
-			   isa.getApi(fileString[1][3]);
-			   communication_distance = isa.distance();
+			//Tracerouteの実行結果(通信先の距離)
+			TracerouteExec tracerouteexec = new TracerouteExec();
+			tracerouteexec.systemCall(fileString[1][3]);
+			//Pingの実行結果(通信時間)
+			PingExec pingexec = new PingExec();
+			pingexec.SystemCall(fileString[1][3]);
+			communication_avetime = pingexec.getAveTime();
+			//通信先の距離IPStaticのAPI使用
+			IpstackApi isa = new IpstackApi();
+			isa.getApi(fileString[1][3]);
+			communication_distance = isa.distance();
 			   
-		     time_ave = DataCalculation.average(timeDiffList);
-		     for(int i=0;i<count;i++){
-		    	 time_var_sub = DataCalculation.variance(time_ave, timeDiffList.get(i), count);
-			    }
+		    time_ave = DataCalculation.average(timeDiffList);
+		    for(int i=0;i<count;i++){
+		    	time_var_sub = DataCalculation.variance(time_ave, timeDiffList.get(i), count);
+			 }
 		     time_var = Math.sqrt(time_ave/count);
 		     time_dis = time_ave/count;
 		     bps = (long)DataCalculation.average(dataSumList);
@@ -124,8 +128,8 @@ public class Main {
 		     sfv.setCommuDitance(communication_distance);
 		     sfv.setCommuAveTime(communication_avetime);
 
-		     System.out.println("time_ave(sec)/ time_var/ / kbps/ communication_distance(m)/ communication_avetime(sec)");
-		     System.out.println(time_ave+"/ "+time_var+"/ "+time_dis+"/ "+kbps+"/ "+ communication_distance+"/ "+communication_avetime);
+		     System.out.println("time_ave(sec)/ time_var/ kbps/ communication_distance(m)/ communication_avetime(sec)");
+		     System.out.println(time_ave+"/ "+time_var+"/ "+kbps+"/ "+ communication_distance+"/ "+communication_avetime);
 //		     
 		    br.close();
 		    } catch (IOException e) {
