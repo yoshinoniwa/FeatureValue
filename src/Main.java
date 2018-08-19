@@ -17,7 +17,7 @@ public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
-			File file = new File("musicstreaming-0514");
+			File file = new File("./googlehome/radio_google");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
 		      
@@ -79,6 +79,7 @@ public class Main {
 		    			isDiff=false;
 		    		}else{
 		    			count++;
+//		    			System.out.println(i+" : "+fileString[i][1]);
 		    			isDiff=true;
 		    		}
 		    		//1秒の差がない時にデータ量を足す
@@ -86,8 +87,11 @@ public class Main {
 			    		dataSum += dataLong;
 			    	}else if(isDiff){
 			    		if(dataSum !=0){
-//			    			System.out.println(dataSum);
 			    			dataSumList.add(dataSum);
+//			    			System.out.println("----------"+fileString[i][1]);
+//			    			System.out.println(dataSum);
+			    		}else{
+			    			dataSumList.add(dataLong);
 			    		}
 			    		dataSum =0;
 			    	}
@@ -100,14 +104,14 @@ public class Main {
 		    //他クラス呼び出し用
 			//Tracerouteの実行結果(通信先の距離)
 			TracerouteExec tracerouteexec = new TracerouteExec();
-			tracerouteexec.systemCall(fileString[1][3]);
+			tracerouteexec.systemCall(fileString[458][3]);
 			//Pingの実行結果(通信時間)
 			PingExec pingexec = new PingExec();
-			pingexec.SystemCall(fileString[1][3]);
+			pingexec.SystemCall(fileString[458][3]);
 			communication_avetime = pingexec.getAveTime();
 			//通信先の距離IPStaticのAPI使用
 			IpstackApi isa = new IpstackApi();
-			isa.getApi(fileString[1][3]);
+			isa.getApi(fileString[458][3]);
 			communication_distance = isa.distance();
 			   
 		    time_ave = DataCalculation.average(timeDiffList);
@@ -127,9 +131,13 @@ public class Main {
 		     sfv.setKbps(kbps);
 		     sfv.setCommuDitance(communication_distance);
 		     sfv.setCommuAveTime(communication_avetime);
-
-		     System.out.println("time_ave(sec)/ time_var/ kbps/ communication_distance(m)/ communication_avetime(sec)");
-		     System.out.println(time_ave+"/ "+time_var+"/ "+kbps+"/ "+ communication_distance+"/ "+communication_avetime);
+		     for(int i=0;i<dataSumList.size();i++){
+		    	 System.out.println(dataSumList.get(i));
+		     }
+		     System.out.println("リストサイズ" + dataSumList.size());
+		     System.out.println("カウント" + count);
+		     System.out.println("\"time_ave(sec)\",\"time_var\",\"kbps\",\"communication_distance(m)\",\"communication_avetime(sec)\"");
+		     System.out.println("\""+time_ave+"\",\""+time_var+"\",\""+kbps+"\",\""+ communication_distance+"\",\""+communication_avetime+"\"");
 //		     
 		    br.close();
 		    } catch (IOException e) {
