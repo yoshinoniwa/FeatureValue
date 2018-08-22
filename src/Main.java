@@ -17,7 +17,7 @@ public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
-			File file = new File("./googlehome/radio_google");
+			File file = new File("./googlehome/knowlage_google_cut");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
 		      
@@ -104,14 +104,14 @@ public class Main {
 		    //他クラス呼び出し用
 			//Tracerouteの実行結果(通信先の距離)
 			TracerouteExec tracerouteexec = new TracerouteExec();
-			tracerouteexec.systemCall(fileString[458][3]);
+			tracerouteexec.systemCall(fileString[2][3]);
 			//Pingの実行結果(通信時間)
 			PingExec pingexec = new PingExec();
-			pingexec.SystemCall(fileString[458][3]);
+			pingexec.SystemCall(fileString[2][3]);
 			communication_avetime = pingexec.getAveTime();
 			//通信先の距離IPStaticのAPI使用
 			IpstackApi isa = new IpstackApi();
-			isa.getApi(fileString[458][3]);
+			isa.getApi(fileString[2][3]);
 			communication_distance = isa.distance();
 			   
 		    time_ave = DataCalculation.average(timeDiffList);
@@ -131,14 +131,17 @@ public class Main {
 		     sfv.setKbps(kbps);
 		     sfv.setCommuDitance(communication_distance);
 		     sfv.setCommuAveTime(communication_avetime);
-		     for(int i=0;i<dataSumList.size();i++){
-		    	 System.out.println(dataSumList.get(i));
-		     }
-		     System.out.println("リストサイズ" + dataSumList.size());
-		     System.out.println("カウント" + count);
+//		     for(int i=0;i<dataSumList.size();i++){
+//		    	 System.out.println(dataSumList.get(i));
+//		     }
+//		     System.out.println("リストサイズ" + dataSumList.size());
+//		     System.out.println("カウント" + count);
+		     System.out.println("----------SCV形式----------");
 		     System.out.println("\"time_ave(sec)\",\"time_var\",\"kbps\",\"communication_distance(m)\",\"communication_avetime(sec)\"");
 		     System.out.println("\""+time_ave+"\",\""+time_var+"\",\""+kbps+"\",\""+ communication_distance+"\",\""+communication_avetime+"\"");
-//		     
+		     System.out.println("----------arff形式----------");
+		     System.out.println("time_ave(sec),time_var,kbps,communication_distance(m),communication_avetime(sec)");
+		     System.out.println(time_ave+","+time_var+","+kbps+","+ communication_distance+","+communication_avetime);
 		    br.close();
 		    } catch (IOException e) {
 		    	System.out.println(e);
