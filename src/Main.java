@@ -17,7 +17,8 @@ public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
-			File file = new File("./streaming/music14");
+			File file = new File("./streamnig-cut/nhkradio02");
+//			File file = new File("./streaming/music08");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
 		      
@@ -42,7 +43,7 @@ public class Main {
 		    long kbps =0;
 		   
 		    double communication_avetime;
-		    double communication_distance;
+		    long communication_distance;
 		    
 		    //ArrayList:filelistにCSVファイルを格納
 		    while (br.ready()){
@@ -112,7 +113,7 @@ public class Main {
 			//通信先の距離IPStaticのAPI使用
 			IpstackApi isa = new IpstackApi();
 			isa.getApi(fileString[3][3]);
-			communication_distance = isa.distance();
+			communication_distance = (long)isa.distance();
 			   
 		    time_ave = DataCalculation.average(timeDiffList);
 		    for(int i=0;i<count;i++){
