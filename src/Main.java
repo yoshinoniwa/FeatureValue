@@ -17,7 +17,7 @@ public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
-			File file = new File("./streamnig-cut/nhkradio02");
+			File file = new File("./sencing/sencing11");
 //			File file = new File("./streaming/music08");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
@@ -105,14 +105,14 @@ public class Main {
 		    //他クラス呼び出し用
 			//Tracerouteの実行結果(通信先の距離)
 			TracerouteExec tracerouteexec = new TracerouteExec();
-			tracerouteexec.systemCall(fileString[3][3]);
+			tracerouteexec.systemCall(fileString[21][3]);
 			//Pingの実行結果(通信時間)
 			PingExec pingexec = new PingExec();
-			pingexec.SystemCall(fileString[3][3]);
+			pingexec.SystemCall(fileString[21][3]);
 			communication_avetime = pingexec.getAveTime();
 			//通信先の距離IPStaticのAPI使用
 			IpstackApi isa = new IpstackApi();
-			isa.getApi(fileString[3][3]);
+			isa.getApi(fileString[21][3]);
 			communication_distance = (long)isa.distance();
 			   
 		    time_ave = DataCalculation.average(timeDiffList);
