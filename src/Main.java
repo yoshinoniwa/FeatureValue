@@ -17,11 +17,10 @@ public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
-			File file = new File("./sencing/sencing11");
-//			File file = new File("./streaming/music08");
+//			File file = new File("./sencing/sencing01");
+			File file = new File("./streaming/music01");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
-		      
 		    //時間 計算用
 		    ArrayList<Long> timeDiffList = new ArrayList<Long>();
 		    long time_dif=0;
@@ -39,11 +38,19 @@ public class Main {
 		    long dataLong=0;
 		    boolean isDiff = true;
 		    ArrayList<Long> dataSumList = new ArrayList<Long>();
+		    double data_var_sub=0;
+		    double data_var=0;
 		    long bps=0;
 		    long kbps =0;
 		   
 		    double communication_avetime;
 		    long communication_distance;
+		    //グラフ用
+		    ArrayList<Long> data_list_graph = new ArrayList<Long>();
+//		    ArrayList<Long> kbps_list = new ArrayList<Long>();
+		    int time_smb=0;
+		    
+
 		    
 		    //ArrayList:filelistにCSVファイルを格納
 		    while (br.ready()){
@@ -72,27 +79,36 @@ public class Main {
 		    	//Calculationクラスでやる
 		    	if(i>1){
 		    		dataLong = Long.parseLong(dataChange);//string型をlong型に変える
-		    		time_dif = DataCalculation.difference(fileString[i][1], fileString[i-1][1]);//difにCalculationのdifferenceを入れる
+		    		//通信していない秒数を算出
+		    		time_dif = DataCalculation.difference(fileString[i][1], fileString[i-1][1]);
 		    		timeDiffList.add(time_dif);
 //		    		System.out.println("差" + dif);
 		    		//1秒の差がない時はfalse 1秒の差がある時にtrue
 		    		if(time_dif<1){
 		    			isDiff=false;
+		    			
 		    		}else{
 		    			count++;
 //		    			System.out.println(i+" : "+fileString[i][1]);
+		    			data_list_graph.add((long)0);
 		    			isDiff=true;
 		    		}
 		    		//1秒の差がない時にデータ量を足す
 		    		if(!isDiff){
 			    		dataSum += dataLong;
+			    		
 			    	}else if(isDiff){
 			    		if(dataSum !=0){
 			    			dataSumList.add(dataSum);
+//			    			for(int j=0;j<dataSum;j++){
+//			    				data_list_graph.add((long)0);
+//			    			}
+//			    			data_list_graph.add((long)0);
 //			    			System.out.println("----------"+fileString[i][1]);
 //			    			System.out.println(dataSum);
 			    		}else{
 			    			dataSumList.add(dataLong);
+			    			data_list_graph.add(dataLong);
 			    		}
 			    		dataSum =0;
 			    	}
@@ -105,24 +121,38 @@ public class Main {
 		    //他クラス呼び出し用
 			//Tracerouteの実行結果(通信先の距離)
 			TracerouteExec tracerouteexec = new TracerouteExec();
-			tracerouteexec.systemCall(fileString[21][3]);
+			tracerouteexec.systemCall(fileString[3][3]);
 			//Pingの実行結果(通信時間)
 			PingExec pingexec = new PingExec();
-			pingexec.SystemCall(fileString[21][3]);
+			pingexec.SystemCall(fileString[3][3]);
 			communication_avetime = pingexec.getAveTime();
 			//通信先の距離IPStaticのAPI使用
 			IpstackApi isa = new IpstackApi();
-			isa.getApi(fileString[21][3]);
+			isa.getApi(fileString[3][3]);
 			communication_distance = (long)isa.distance();
 			   
 		    time_ave = DataCalculation.average(timeDiffList);
+		    bps = (long)DataCalculation.average(dataSumList);
+		    kbps = (bps/100)*8;
 		    for(int i=0;i<count;i++){
-		    	time_var_sub = DataCalculation.variance(time_ave, timeDiffList.get(i), count);
+		    	time_var_sub += DataCalculation.variance(time_ave, timeDiffList.get(i));
+		    	data_var_sub += DataCalculation.variance(kbps, dataSumList.get(i));
 			 }
-		     time_var = Math.sqrt(time_ave/count);
+		     time_var = Math.sqrt(time_var_sub/count);
 		     time_dis = time_ave/count;
-		     bps = (long)DataCalculation.average(dataSumList);
-		     kbps = (bps/100)*8;
+		     data_var = Math.sqrt(data_var_sub/count);
+		     
+//		     int count_t=0;
+//		     
+//		     for(int i=0;i<timeDiffList.size();i++){
+//		    	 if(timeDiffList.get(i)!=0){
+//		    			data_list_graph.add((long)0);
+//		    		}else if(timeDiffList.get(i)==0){
+//		    			data_list_graph.add((long)dataSumList.get(count_t));
+//		    			count_t++;
+//		    		}
+//		     }
+		     
 		     
 		     //特徴量を１つのクラスにまとめる
 		     SetFeatureValue sfv = new SetFeatureValue();
@@ -132,8 +162,19 @@ public class Main {
 		     sfv.setKbps(kbps);
 		     sfv.setCommuDitance(communication_distance);
 		     sfv.setCommuAveTime(communication_avetime);
-		     for(int i=0;i<dataSumList.size();i++){
-		    	 System.out.println(dataSumList.get(i));
+//		     for(int i=0;i<dataSumList.size();i++){
+//		    	 System.out.println(dataSumList.get(i));
+//		     }
+//		     for(int i=0;i<timeDiffList.size();i++){
+//		    	 System.out.println(timeDiffList.get(i));
+//		     }
+//		     System.out.println("------------------------");
+		     for(int i=0;i<data_list_graph.size();i++){
+		    	 System.out.println(data_list_graph.get(i));
+		     }
+		     System.out.println("------------------------");
+		     for(int i=0;i<data_list_graph.size();i++){
+		    	 System.out.println(timeDiffList.get(i));
 		     }
 //		     System.out.println("リストサイズ" + dataSumList.size());
 //		     System.out.println("カウント" + count);
@@ -143,6 +184,7 @@ public class Main {
 		     System.out.println("----------arff形式----------");
 		     System.out.println("time_ave(sec),time_var,kbps,communication_distance(m),communication_avetime(sec)");
 		     System.out.println(time_ave+","+time_var+","+kbps+","+ communication_distance+","+communication_avetime);
+		     System.out.println("データ量標準偏差" + data_var);
 		    br.close();
 		    } catch (IOException e) {
 		    	System.out.println(e);

@@ -43,12 +43,12 @@ public class DataCalculation {
 		return ave;
 	}
 	//標準偏差
-	public static double variance(double time_ave,long diff,int count){
+	public static double variance(double time_ave,long diff){
 		double sum =0;
-		double var=0;
-		sum += (((double)diff-time_ave)*((double)diff-time_ave));
-		var = sum/count;
-		return var;
+//		double var=0;
+		sum = (((double)diff-time_ave)*((double)diff-time_ave));
+
+		return sum;
 		}
 	
 	
