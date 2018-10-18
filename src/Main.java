@@ -12,13 +12,14 @@ import Traceroute.TracerouteExec;
 import Ping.PingExec;
 import Ipgelocation.IpstackApi;
 import CommunicationPattern.DistinctionIpaddress;
+import TimeSeriesClustering.DataCut;
 
 public class Main {
 	public static void main(String args[]) throws ParseException {
 		try {
 			//csvファイル(moviestreaming-0514)読み込み
 //			File file = new File("./sencing/sencing01");
-			File file = new File("./streaming/music01");
+			File file = new File("./16-09-25.csv");
 		    BufferedReader br = new BufferedReader(new FileReader(file));
 		    ArrayList<String[]> filelist = new ArrayList<String[]>(); //csvファイルを格納するArrayListの準備
 		    //時間 計算用
@@ -162,20 +163,22 @@ public class Main {
 		     sfv.setKbps(kbps);
 		     sfv.setCommuDitance(communication_distance);
 		     sfv.setCommuAveTime(communication_avetime);
-//		     for(int i=0;i<dataSumList.size();i++){
-//		    	 System.out.println(dataSumList.get(i));
-//		     }
+		     for(int i=0;i<dataSumList.size();i++){
+		    	 System.out.println(dataSumList.get(i));
+		     }
+		     DataCut dc = new DataCut();
+		     dc.setTrafficData(dataSumList);
 //		     for(int i=0;i<timeDiffList.size();i++){
 //		    	 System.out.println(timeDiffList.get(i));
 //		     }
 //		     System.out.println("------------------------");
-		     for(int i=0;i<data_list_graph.size();i++){
-		    	 System.out.println(data_list_graph.get(i));
-		     }
-		     System.out.println("------------------------");
-		     for(int i=0;i<data_list_graph.size();i++){
-		    	 System.out.println(timeDiffList.get(i));
-		     }
+//		     for(int i=0;i<data_list_graph.size();i++){
+//		    	 System.out.println(data_list_graph.get(i));
+//		     }
+//		     System.out.println("------------------------");
+//		     for(int i=0;i<data_list_graph.size();i++){
+//		    	 System.out.println(timeDiffList.get(i));
+//		     }
 //		     System.out.println("リストサイズ" + dataSumList.size());
 //		     System.out.println("カウント" + count);
 		     System.out.println("----------SCV形式----------");
