@@ -179,10 +179,11 @@ public class Main {
 			dc.setTrafficData(dataSumList);
 			dc.setSlideData();
 			slide_data = dc.getSlideData();
-			dc.setTrrafficAverage();
-			dc.setTrafficVariance();
-			slide_data_data_ave = dc.getTrafficAverage();
-			slide_data_data_var = dc.getTrafficVariance();
+			dc.inputFile();
+//			dc.setTrrafficAverage();
+//			dc.setTrafficVariance();
+//			slide_data_data_ave = dc.getTrafficAverage();
+//			slide_data_data_var = dc.getTrafficVariance();
 
 			// for(int i=0;i<timeDiffList.size();i++){
 			// System.out.println(timeDiffList.get(i));

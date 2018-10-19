@@ -1,5 +1,8 @@
 package TimeSeriesClustering;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class DataCut {
@@ -9,7 +12,6 @@ public class DataCut {
 	static ArrayList<Long> traffic_data = new ArrayList<Long>();
 	// カットしたデータを格納
 	static long[][] traffic_cut_data;
-	static long[] traffic_pass = new long[WINDOW_WIDE];
 	SlideDataCalclator sdc = new SlideDataCalclator();
 
 	long data_ave;
@@ -40,17 +42,18 @@ public class DataCut {
 				for (int j = 0; j < WINDOW_WIDE; j++) {
 					// j+SLIDE_WIDE*countでスライドさせる
 					traffic_cut_data[i][j] = traffic_data.get(j + SLIDE_WIDE * count);
-					traffic_pass[j] = traffic_cut_data[i][j];
 				}
 			} else {
 				break;
 			}
+			// 平均を求める
 			sdc.average(traffic_cut_data[i]);
-			sdc.variance(traffic_pass);
-			System.out.println("++++++" + sdc.data_ave());
+			// 標準偏差を求める
+			sdc.variance(traffic_cut_data[i]);
+			System.out.println("++++++" + sdc.data_var());
+			// リストに入れる
 			traffic_data_ave_list.add(sdc.data_ave());
 			traffic_data_var_list.add(sdc.data_var());
-			traffic_pass = new long[WINDOW_WIDE];
 			count++;
 		}
 	}
@@ -59,33 +62,41 @@ public class DataCut {
 		return traffic_cut_data;
 	}
 
-	public void setTrrafficAverage() {
-//		// traffic_data_ave = new long[traffic_data.size()];
-//		for (int i = 0; i < traffic_data.size(); i++) {
-//			traffic_data_ave[i] = sdc.data_ave();
-////			System.out.println("++++++" + sdc.data_ave());
-//		}
-		
+	public ArrayList<Long> getTrafficAverage() {
+		return traffic_data_ave_list;
 	}
 
-	public long[] getTrafficAverage() {
-		return traffic_data_ave;
+	public ArrayList<Double> getTrafficVariance() {
+		return traffic_data_var_list;
 	}
 
-	public void setTrafficVariance() {
-		traffic_data_var = new double[traffic_data.size()];
-		for (int i = 0; i < traffic_data.size(); i++) {
-			traffic_data_var[i] = sdc.data_var();
+	public void inputFile() {
+		String file_name = "data.csv";
+		// ファイル呼び込み
+		try {
+			File file = new File(file_name);
+			if (checkBeforeWritefile(file)) {
+				PrintWriter pw = new PrintWriter(file);
+				pw.write("\"No.\",\"average\",\"variance\"");
+				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
+					pw.write( "\""+i+"\",\"" + String.valueOf(traffic_data_ave_list.get(i)) +"\",\"" +String.valueOf(traffic_data_var_list.get(i)) + "\"\n");
+				}
+				pw.close();
+			} else {
+				System.out.println("ファイルに書き込めません");
+			}
+
+		} catch (IOException e) {
+			System.out.println(e);
 		}
 	}
 
-	public double[] getTrafficVariance() {
-		return traffic_data_var;
-	}
-
-	public void show() {
-		for (int i = 0; i < traffic_data.size(); i++) {
-			System.out.println("++" + traffic_data_ave[i] + "," + traffic_data_var[i]);
+	private static boolean checkBeforeWritefile(File file) {
+		if (file.exists()) {
+			if (file.isFile() && file.canWrite()) {
+				return true;
+			}
 		}
+		return false;
 	}
 }
