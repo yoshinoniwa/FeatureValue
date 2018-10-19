@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class DataCut {
-	final static int SLIDE_WIDE = 30; // スライド幅(30秒)
-	final static int WINDOW_WIDE = 60; // ウィンドウ幅(1分)
+	final static int SLIDE_WIDE = 10; // スライド幅(30秒)
+	final static int WINDOW_WIDE = 60; // ウィンドウ幅(60秒)
 	// 通信量(1秒)のデータを入れるリスト
 	static ArrayList<Long> traffic_data = new ArrayList<Long>();
 	// カットしたデータを格納
@@ -77,7 +77,7 @@ public class DataCut {
 			File file = new File(file_name);
 			if (checkBeforeWritefile(file)) {
 				PrintWriter pw = new PrintWriter(file);
-				pw.write("\"No.\",\"average\",\"variance\"");
+				pw.write("\"No.\",\"average\",\"variance\"\n");
 				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
 					pw.write( "\""+i+"\",\"" + String.valueOf(traffic_data_ave_list.get(i)) +"\",\"" +String.valueOf(traffic_data_var_list.get(i)) + "\"\n");
 				}
