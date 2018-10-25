@@ -50,7 +50,7 @@ public class DataCut {
 			sdc.average(traffic_cut_data[i]);
 			// 標準偏差を求める
 			sdc.variance(traffic_cut_data[i]);
-			System.out.println("++++++" + sdc.data_var());
+//			System.out.println("++++++" + sdc.data_var());
 			// リストに入れる
 			traffic_data_ave_list.add(sdc.data_ave());
 			traffic_data_var_list.add(sdc.data_var());
@@ -72,19 +72,27 @@ public class DataCut {
 
 	public void inputFile() {
 		String file_name = "data.csv";
+		File newfile = new File("newfile.txt");
 		// ファイル呼び込み
 		try {
+			newfile.createNewFile();
 			File file = new File(file_name);
-			if (checkBeforeWritefile(file)) {
-				PrintWriter pw = new PrintWriter(file);
-				pw.write("\"No.\",\"average\",\"variance\"\n");
-				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
-					pw.write( "\""+i+"\",\"" + String.valueOf(traffic_data_ave_list.get(i)) +"\",\"" +String.valueOf(traffic_data_var_list.get(i)) + "\"\n");
-				}
-				pw.close();
-			} else {
-				System.out.println("ファイルに書き込めません");
-			}
+//			if (checkBeforeWritefile(file)) {
+//				PrintWriter pw = new PrintWriter(file);
+//				pw.write("\"No.\",\"average\",\"variance\"\n");
+//				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
+////					pw.write( "\""+i+"\",\"" + String.valueOf(traffic_data_ave_list.get(i)) +"\",\"" +String.valueOf(traffic_data_var_list.get(i)) + "\"\n");
+//					pw.write( String.valueOf(traffic_data_ave_list.get(i)) +"," +String.valueOf(traffic_data_var_list.get(i)) + ",label\n");
+//				}
+//				pw.close();
+//			} else {
+//				System.out.println("ファイルに書き込めません");
+//			}
+			if (newfile.createNewFile()){
+		        System.out.println("ファイルの作成に成功しました");
+		      }else{
+		        System.out.println("ファイルの作成に失敗しました");
+		      }
 
 		} catch (IOException e) {
 			System.out.println(e);
