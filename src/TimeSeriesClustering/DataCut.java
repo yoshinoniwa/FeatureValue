@@ -3,11 +3,16 @@ package TimeSeriesClustering;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.xml.crypto.Data;
 
 public class DataCut {
 	final static int SLIDE_WIDE = 10; // スライド幅(30秒)
-	final static int WINDOW_WIDE = 60; // ウィンドウ幅(60秒)
+	final static int WINDOW_WIDE = 30; // ウィンドウ幅(60秒)
 	// 通信量(1秒)のデータを入れるリスト
 	static ArrayList<Long> traffic_data = new ArrayList<Long>();
 	// カットしたデータを格納
@@ -50,7 +55,7 @@ public class DataCut {
 			sdc.average(traffic_cut_data[i]);
 			// 標準偏差を求める
 			sdc.variance(traffic_cut_data[i]);
-//			System.out.println("++++++" + sdc.data_var());
+			// System.out.println("++++++" + sdc.data_var());
 			// リストに入れる
 			traffic_data_ave_list.add(sdc.data_ave());
 			traffic_data_var_list.add(sdc.data_var());
@@ -71,32 +76,63 @@ public class DataCut {
 	}
 
 	public void inputFile() {
-		String file_name = "data.csv";
-		File newfile = new File("newfile.txt");
-		// ファイル呼び込み
+		Calendar myCal = Calendar.getInstance();
+		DateFormat myFormat = new SimpleDateFormat("yyyy_MM_dd_HHmm");
+		String file_csv_name = "./weka_file/" + myFormat.format(myCal.getTime()) + ".csv";
+		String file_arff_name = "./weka_file/" + myFormat.format(myCal.getTime()) + ".arff";
+		File new_csv_file = new File(file_csv_name);
+		File new_arff_file = new File(file_arff_name);
+		// ファイル作成
 		try {
-			newfile.createNewFile();
-			File file = new File(file_name);
-//			if (checkBeforeWritefile(file)) {
-//				PrintWriter pw = new PrintWriter(file);
-//				pw.write("\"No.\",\"average\",\"variance\"\n");
-//				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
-////					pw.write( "\""+i+"\",\"" + String.valueOf(traffic_data_ave_list.get(i)) +"\",\"" +String.valueOf(traffic_data_var_list.get(i)) + "\"\n");
-//					pw.write( String.valueOf(traffic_data_ave_list.get(i)) +"," +String.valueOf(traffic_data_var_list.get(i)) + ",label\n");
-//				}
-//				pw.close();
-//			} else {
-//				System.out.println("ファイルに書き込めません");
-//			}
-			if (newfile.createNewFile()){
-		        System.out.println("ファイルの作成に成功しました");
-		      }else{
-		        System.out.println("ファイルの作成に失敗しました");
-		      }
+			new_csv_file.createNewFile();
+			new_arff_file.createNewFile();
+			if (new_csv_file.createNewFile()) {
+				System.out.println("ファイルの作成に成功しました");
+			} else {
+				System.out.println("ファイルの作成に失敗しました");
+			}
+			// CSVファイル作成
+			if (checkBeforeWritefile(new_csv_file)) {
+				PrintWriter pw = new PrintWriter(new_csv_file);
+				pw.write("\"No.\",\"average\",\"variance\",\"class\"\n");
+				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
+					pw.write(i + "," + String.valueOf(traffic_data_ave_list.get(i)) + ","
+							+ String.valueOf(traffic_data_var_list.get(i)) + ",label\n");
+				}
+				pw.close();
+			} else {
+				System.out.println("ファイルに書き込めません");
+			}
+			
 
+			// ARFFファイル作成
+			if (new_arff_file.createNewFile()) {
+				System.out.println("ファイルの作成に成功しました");
+			} else {
+				System.out.println("ファイルの作成に失敗しました");
+			}
+			if (checkBeforeWritefile(new_arff_file)) {
+				PrintWriter pw = new PrintWriter(new_arff_file);
+				pw.write("@relation traffic_pattern\n");
+				pw.write("\n");
+				pw.write("@attribute dataave real\n");
+				pw.write("@attribute datavar real\n");
+				pw.write("@attribute class {label}\n");
+				pw.write("\n");
+				pw.write("@data\n");
+				for (int i = 0; i < traffic_data_ave_list.size(); i++) {
+					pw.write(String.valueOf(traffic_data_ave_list.get(i)) + ","
+							+ String.valueOf(traffic_data_var_list.get(i)) + ",label\n");
+				}
+				pw.close();
+			} else {
+				System.out.println("ファイルに書き込めません");
+			}
+			
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+
 	}
 
 	private static boolean checkBeforeWritefile(File file) {
