@@ -11,8 +11,8 @@ import java.util.Calendar;
 import javax.xml.crypto.Data;
 
 public class DataCut {
-	final static int SLIDE_WIDE = 10; // スライド幅(30秒)
-	final static int WINDOW_WIDE = 30; // ウィンドウ幅(60秒)
+	final static int SLIDE_WIDE = 30; // スライド幅(30秒)
+	final static int WINDOW_WIDE = 120; // ウィンドウ幅(60秒)
 	// 通信量(1秒)のデータを入れるリスト
 	static ArrayList<Long> traffic_data = new ArrayList<Long>();
 	// カットしたデータを格納
