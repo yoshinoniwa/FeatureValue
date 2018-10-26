@@ -19,7 +19,7 @@ public class Main {
 		try {
 			// csvファイル(moviestreaming-0514)読み込み
 			// File file = new File("./sencing/sencing01");
-			File file = new File("./SmartCam/16-09-25.csv");
+			File file = new File("./SmartCam/16-09-24.csv");
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			ArrayList<String[]> filelist = new ArrayList<String[]>(); // csvファイルを格納するArrayListの準備
 			// 時間 計算用
